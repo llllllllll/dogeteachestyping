@@ -105,6 +105,7 @@ void play_word(){
 	case 10:
 	    continue;
 	    break;
+	case '\a':
 	case 330:
 	case 127:
 	    if (col == 0){
