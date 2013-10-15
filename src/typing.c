@@ -105,7 +105,7 @@ void play_word(){
 	case 10:
 	    continue;
 	    break;
-	case '\a':
+	case 263:
 	case 330:
 	case 127:
 	    if (col == 0){
@@ -115,11 +115,13 @@ void play_word(){
 	    printw("\b \b");
 	    continue;
 	    break;
+	case 6:
 	case KEY_RIGHT:
 	    move(5,getcurx(stdscr)+1);
 	    ++col;
 	    continue;
 	    break;
+	case 2:
 	case KEY_LEFT:
 	    if (col == 0){
 		continue;
