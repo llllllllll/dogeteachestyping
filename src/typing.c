@@ -105,13 +105,15 @@ void play_word(){
 	case 10:
 	    continue;
 	    break;
-	case 263:
+	//case 263:
+	case KEY_BACKSPACE:
 	case 330:
 	case 127:
 	    if (col == 0){
 		continue;
 	    }
 	    --col;
+	    --c;
 	    printw("\b \b");
 	    continue;
 	    break;
@@ -133,7 +135,6 @@ void play_word(){
 	}
 	printw("%c",in);
 	if (in == word[c] && col == c){
-	    ++c;
 	    if (rand() % 2){
 		mvprintw(20,62,"________________");
 		mvprintw(21,61,"/                \\");
@@ -163,5 +164,6 @@ void play_word(){
 	    }
 	}
 	++col;
+	++c;
     }
 }
