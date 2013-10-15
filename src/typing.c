@@ -150,6 +150,7 @@ void play_word(){
 	}
 	printw("%c",in);
 	if (in == word[c] && col == c){
+	    ++c;
 	    if (rand() % 2){
 		mvprintw(20,62,"________________");
 		mvprintw(21,61,"/                \\");
@@ -179,6 +180,5 @@ void play_word(){
 	    }
 	}
 	++col;
-	++c;
     }
 }
