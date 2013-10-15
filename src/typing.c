@@ -83,7 +83,7 @@ void play_word(){
     clear();
     int in,col = 0;
     c = 0;
-    char *word = wordv[rand() % 119095];
+    char *word = wordv[rand() % wordc];
     mvprintdoge(0,0);
     attron(COLOR_PAIR(1));
     mvprintw(mr-1,mc-13,"by Joe Jevnik");
@@ -109,6 +109,7 @@ void play_word(){
 	  for (int n = 0;n < wordc;n++){
 	    free(wordv[n]);
 	  }
+	  free(wordv);
 	  endwin();
 	  exit(0);
 	  break;
