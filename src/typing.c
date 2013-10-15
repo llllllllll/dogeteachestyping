@@ -105,6 +105,7 @@ void play_word(){
 	case 10:
 	    continue;
 	    break;
+	case 330:
 	case 127:
 	    if (col == 0){
 		continue;
@@ -143,7 +144,7 @@ void play_word(){
 		refresh();
 	    }
 	} else {
-	    mvprintw(11,69,"errors: %i",++mis);
+	    mvprintw(8,69,"errors: %i",++mis);
 	    move(5,col+70);
 	    if (rand() % 2){
 		mvprintw(20,62,"________________");
