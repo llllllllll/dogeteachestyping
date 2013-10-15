@@ -104,7 +104,7 @@ void show_about(){
     mvprintw(5,64,"made by Joe Jevnik");
     mvprintw(6,64,"2013, this program is");
     mvprintw(7,64,"free software, see");
-    mvprintw(8,64,"LICENSEfor more info");
+    mvprintw(8,64,"LICENSE for more info");
     mvprintw(0,mc-28,"Press any key to continue...");
     mvprintw(mr-1,mc-13,"by Joe Jevnik");
     refresh();
