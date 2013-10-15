@@ -56,7 +56,7 @@ void init_menu(){
     start_color();
     use_default_colors();
     init_pair(1,COLOR_YELLOW,-1);
-    cbreak();
+    raw();
     keypad(stdscr,TRUE);
     curs_set(0);
     noecho();
@@ -87,6 +87,7 @@ void show_help(){
     attron(COLOR_PAIR(1));
     mvprintw(5,60,"u get points for typing fast");
     mvprintw(6,60,"u lose points for typing wrong");
+    mvprintw(7,60,"^S to skip a word, ^C to quit");
     mvprintw(0,mc-28,"Press any key to continue...");
     mvprintw(mr-1,mc-13,"by Joe Jevnik");
     refresh();

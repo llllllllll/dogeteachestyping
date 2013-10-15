@@ -12,7 +12,8 @@
 int mr,mc,c,mis = 0,sc = 0;
 long st;
 
-char *words[119095];
+int wordc;
+char **wordv;
 //time_t t;
 //struct tm*  t_;
 
@@ -31,7 +32,7 @@ char *CORR_PHRASES[] = { "wow",
 			 "top doge" };
 
 // Phrases indicating a mistyped letter.
-#define NUM_INCORR_PHRASES 8
+#define NUM_INCORR_PHRASES 9
 char *INCORR_PHRASES[] = { "o no",
 			   "wat",
 			   "pls",
@@ -39,6 +40,7 @@ char *INCORR_PHRASES[] = { "o no",
 			   "why",
 			   "mabe next time",
 			   "such learning",
+			   "top kek",
 			   "you can do it" };
 
 // Returns a pseudorandom phrase to denote a correctly spelled word.
@@ -55,18 +57,21 @@ char *get_incorr_phrase(){
 
 void start_game(){
     getmaxyx(stdscr,mr,mc);
-    FILE *f = fopen("/usr/share/dict/american-english","r");
+    FILE *f = fopen("/usr/share/dict/words","r");
     char lb[128];
     if (f == NULL){
 	clear();
-	mvprintw(0,0,"ERROR:file:'/usr/share/dict/american-english' not found");
+	mvprintw(0,0,"ERROR:file:'/usr/share/dict/words' not found");
 	mvprintw(1,0,"Press any key to continue...");
 	refresh();
 	getch();
 	exit(1);
     }
+    for (wordc = 0;fgets(lb,128,f);wordc++);
+    fseek(f,0,SEEK_SET);
+    wordv = (char**) malloc(wordc * sizeof(char*));
     for (int n = 0;fgets(lb,128,f);n++){
-        words[n] = strdup(lb);
+        wordv[n] = strdup(lb);
     }
     //time(&t);
     // t_ = localtime(&t);
@@ -78,7 +83,7 @@ void play_word(){
     clear();
     int in,col = 0;
     c = 0;
-    char *word = words[rand() % 119095];
+    char *word = wordv[rand() % 119095];
     mvprintdoge(0,0);
     attron(COLOR_PAIR(1));
     mvprintw(mr-1,mc-13,"by Joe Jevnik");
@@ -100,6 +105,16 @@ void play_word(){
 	}
 	in = getch();
 	switch(in){
+	case 3:
+	  for (int n = 0;n < wordc;n++){
+	    free(wordv[n]);
+	  }
+	  endwin();
+	  exit(0);
+	  break;
+	case 19:
+	  play_word();
+	  break;
 	case KEY_UP:
 	case KEY_DOWN:
 	case 10:
