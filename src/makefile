@@ -11,7 +11,7 @@ EXECUTABLE=doge
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ -lncurses -lpthread
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ -lncurses
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
