@@ -121,7 +121,6 @@ void play_word(){
 	case 10:
 	    continue;
 	    break;
-	//case 263:
 	case KEY_BACKSPACE:
 	case 330:
 	case 127:
@@ -129,7 +128,6 @@ void play_word(){
 		continue;
 	    }
 	    --col;
-	    --c;
 	    printw("\b \b");
 	    continue;
 	    break;
