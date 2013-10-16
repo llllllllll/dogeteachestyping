@@ -173,8 +173,8 @@ void print_time(void *id){
 	getyx(stdscr,r,c);
 	time(get_time_counter());
         show_time();
-	refresh();
 	move(r,c);
+	refresh();
 	sleep(1);
     }
 }
