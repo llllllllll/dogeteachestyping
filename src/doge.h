@@ -5,17 +5,20 @@
 
 #ifndef DOGE_H
 #define DOGE_H
+#include <pthread.h>
+
+// Thread access
+pthread_t *get_time_thread();
 
 // Screens
 void init_menu();
 void show_menu();
-//void print_time();
+void print_time(void*);
 
 // Game
 void start_game();
 void play_word();
-void incr_score();
-void decr_score();
+void show_time(time_t);
 
 char * doge_img();
 

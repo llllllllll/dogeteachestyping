@@ -9,17 +9,14 @@
 #include <time.h>
 #include "doge.h"
 
-int mr,mc,c,mis = 0,sc = 0;
-long st;
-
-int wordc;
-char **wordv;
-//time_t t;
-//struct tm*  t_;
+// Max row, max column, current char, word count, mistake count, score
+int mr,mc,c,wordc,mis = 0,sc = 0,not_playing = 1; // is the game not running.
+time_t s = 0; // The time the the game itself starts.
+char **wordv; // The word list loaded from /usr/share/dict/words
 
 // Phrases indicating a correct word.
 #define NUM_CORR_PHRASES 11
-char *CORR_PHRASES[] = { "wow",
+static char *CORR_PHRASES[] = { "wow",
 			 "wow",
 			 "such smart",
 			 "such letters",
@@ -33,7 +30,7 @@ char *CORR_PHRASES[] = { "wow",
 
 // Phrases indicating a mistyped letter.
 #define NUM_INCORR_PHRASES 9
-char *INCORR_PHRASES[] = { "o no",
+static char *INCORR_PHRASES[] = { "o no",
 			   "wat",
 			   "pls",
 			   "pls no",
@@ -55,6 +52,9 @@ char *get_incorr_phrase(){
     return INCORR_PHRASES[n];
 }
 
+// Loads the word file and counts the words. mallocs a char** to hold every word
+// and mallocs each word in it.
+// ERROR: Errors if the words file cannot be read and exits with exit(1).
 void start_game(){
     getmaxyx(stdscr,mr,mc);
     FILE *f = fopen("/usr/share/dict/words","r");
@@ -73,24 +73,24 @@ void start_game(){
     for (int n = 0;fgets(lb,128,f);n++){
         wordv[n] = strdup(lb);
     }
-    //time(&t);
-    // t_ = localtime(&t);
-    // st = t_->tm_sec;
+    time(&s);
+    not_playing = 0;
     play_word();
 }
 
+// Plays one word.
+// Increments sc for every word you get correct.
+// Increments c for every letter you get correct.
+// Increments mis for every letter you get incorrect.
 void play_word(){
     clear();
     int in,col = 0;
-    c = 0;
     char *word = wordv[rand() % wordc];
+    c = 0;
     mvprintdoge(0,0);
     attron(COLOR_PAIR(1));
     mvprintw(mr-1,mc-13,"by Joe Jevnik");
     mvprintw(7,69,"words:  %i",sc);
-    //time(t);
-    //t_ = localtime(t);
-    //mvprintw(8,69,"WPM:    %i",(double) sc / (t_->tm_sec - st));
     mvprintw(8,69,"errors: %i",mis);
     attron(A_BOLD);
     mvprintw(3,69,"%s",word);
@@ -107,9 +107,10 @@ void play_word(){
 	switch(in){
 	case 3:
 	  for (int n = 0;n < wordc;n++){
-	    free(wordv[n]);
+	      free(wordv[n]);
 	  }
 	  free(wordv);
+	  pthread_cancel(*get_time_thread());
 	  endwin();
 	  exit(0);
 	  break;
@@ -179,5 +180,16 @@ void play_word(){
 	    }
 	}
 	++col;
+    }
+}
+
+// Hides the time if needed.
+void show_time(time_t t){
+    if (not_playing){
+	attron(A_INVIS);
+    }
+    mvprintw(9,69,"time:   %i",t - s);
+    if (not_playing){
+	attroff(A_INVIS);
     }
 }

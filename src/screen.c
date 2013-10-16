@@ -166,19 +166,16 @@ void show_menu(){
     show_menu();
 }
 
-/*
+// Prints the time (started from a pthread).
 void print_time(void *id){
-    int r = 0,c = 0;
-    long s;
+    int r,c; // Row and column when this is called.
     time_t t;
-    struct tm*  t_;
     while (1){
 	getyx(stdscr,r,c);
 	time(&t);
-	t_ = localtime(&t);
-	mvprintw(8,69,"time:   %i",t_->tm_sec);
+        show_time(t);
+	refresh();
 	move(r,c);
-	nanosleep(10000);
+	sleep(1);
     }
 }
-*/
