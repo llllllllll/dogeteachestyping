@@ -134,6 +134,12 @@ void show_menu(){
     if (opt == 3){ attroff(A_STANDOUT); }
     refresh();
     switch(getch()){
+    case KEY_RESIZE:
+	endwin();
+	getmaxyx(stdscr,mr,mc);
+	refresh();
+	show_menu();
+	break;
     case KEY_UP:
 	if (opt > 0){
 	--opt;

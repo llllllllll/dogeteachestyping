@@ -83,11 +83,22 @@ void start_game(){
 // Increments c for every letter you get correct.
 // Increments mis for every letter you get incorrect.
 void play_word(){
-    clear();
+    move(3,60);
+    clrtoeol();
+    move(5,60);
+    clrtoeol();
+    move(6,60);
+    clrtoeol();
+    move(7,60);
+    clrtoeol();
+    move(8,60);
+    clrtoeol;
+    move(9,60);
+    clrtoeol();
     int in,col = 0;
     char *word = wordv[rand() % wordc];
     c = 0;
-    mvprintdoge(0,0);
+    //mvprintdoge(0,0);
     attron(COLOR_PAIR(1));
     mvprintw(mr-1,mc-13,"by Joe Jevnik");
     mvprintw(7,69,"words:  %i",sc);
@@ -119,6 +130,16 @@ void play_word(){
 	case 19:
 	  play_word();
 	  break;
+	case KEY_RESIZE:
+	    move(mr-1,mc-13);
+	    clrtoeol();
+	    endwin();
+	    getmaxyx(stdscr,mr,mc);
+	    mvprintw(mr-1,mc-13,"by Joe Jevnik");
+	    move(5,69);
+	    refresh();
+	    continue;
+	    break;
 	case KEY_UP:
 	case KEY_DOWN:
 	case 10:
