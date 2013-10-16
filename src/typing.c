@@ -92,7 +92,8 @@ void play_word(){
     mvprintw(mr-1,mc-13,"by Joe Jevnik");
     mvprintw(7,69,"words:  %i",sc);
     mvprintw(8,69,"errors: %i",mis);
-    mvprintw(9,69,"time:   %i",t - s);
+    mvprintw(9,69,"wps:    %f", (double) sc / (t - s));
+    mvprintw(10,69,"time:   %i",t - s);
     attron(A_BOLD);
     mvprintw(3,69,"%s",word);
     mvprintw(5,67,"> ");
@@ -193,7 +194,8 @@ void show_time(){
     if (not_playing){
 	attron(A_INVIS);
     }
-    mvprintw(9,69,"time:   %i",t - s);
+    mvprintw(9,69,"wps:    %f", (double) sc / (t - s));
+    mvprintw(10,69,"time:   %i",t - s);
     if (not_playing){
 	attroff(A_INVIS);
     }
