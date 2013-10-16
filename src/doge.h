@@ -18,9 +18,10 @@ void print_time(void*);
 // Game
 void start_game();
 void play_word();
-void show_time(time_t);
+void show_time();
+time_t *get_time_counter();
 
-char * doge_img();
+char *doge_img();
 
 // Macros to print doge quicker.
 #define printdoge() \

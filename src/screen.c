@@ -169,11 +169,10 @@ void show_menu(){
 // Prints the time (started from a pthread).
 void print_time(void *id){
     int r,c; // Row and column when this is called.
-    time_t t;
     while (1){
 	getyx(stdscr,r,c);
-	time(&t);
-        show_time(t);
+	time(get_time_counter());
+        show_time();
 	refresh();
 	move(r,c);
 	sleep(1);

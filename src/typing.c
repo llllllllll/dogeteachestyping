@@ -11,7 +11,7 @@
 
 // Max row, max column, current char, word count, mistake count, score
 int mr,mc,c,wordc,mis = 0,sc = 0,not_playing = 1; // is the game not running.
-time_t s = 0; // The time the the game itself starts.
+time_t t = 0,s = 0; // The time counter and the the game itself starts.
 char **wordv; // The word list loaded from /usr/share/dict/words
 
 // Phrases indicating a correct word.
@@ -92,6 +92,7 @@ void play_word(){
     mvprintw(mr-1,mc-13,"by Joe Jevnik");
     mvprintw(7,69,"words:  %i",sc);
     mvprintw(8,69,"errors: %i",mis);
+    mvprintw(9,69,"time:   %i",t - s);
     attron(A_BOLD);
     mvprintw(3,69,"%s",word);
     mvprintw(5,67,"> ");
@@ -183,8 +184,12 @@ void play_word(){
     }
 }
 
+time_t *get_time_counter(){
+    return &t;
+}
+
 // Hides the time if needed.
-void show_time(time_t t){
+void show_time(){
     if (not_playing){
 	attron(A_INVIS);
     }
