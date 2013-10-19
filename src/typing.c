@@ -6,6 +6,7 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include "doge.h"
 
@@ -92,7 +93,7 @@ void play_word(){
     move(7,60);
     clrtoeol();
     move(8,60);
-    clrtoeol;
+    clrtoeol();
     move(9,60);
     clrtoeol();
     int in,col = 0;
