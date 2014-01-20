@@ -7,15 +7,11 @@
 #include "doge.h"
 #define EXIT_SUCCESS 0
 
-pthread_t pt;
+pthread_t time_thread;
 
 // Spawns the time thread and the main thread.
 int main(){
-    pthread_create(&pt,NULL,print_time,NULL);
+    pthread_create(&time_thread,NULL,print_time,NULL);
     init_menu();
     return EXIT_SUCCESS;
-}
-
-pthread_t *get_time_thread(){
-    return &pt;
 }

@@ -12,45 +12,43 @@
 
 // Max row, max column, current char, word count, mistake count, score
 int mr,mc,c,wordc,mis = 0,sc = 0,not_playing = 1; // is the game not running.
-time_t t = 0,s = 0; // The time counter and the the game itself starts.
+time_t time_ctr = 0,s = 0; // The time counter and the the game itself starts.
 char **wordv; // The word list loaded from /usr/share/dict/words
 
 // Phrases indicating a correct word.
 #define NUM_CORR_PHRASES 11
 static char *CORR_PHRASES[] = { "wow",
-			 "wow",
-			 "such smart",
-			 "such letters",
-			 "such spell",
-			 "many letters",
-			 "how smart",
-			 "good",
-			 "very typing",
-			 "how keyboard",
-			 "top doge" };
+				"wow",
+				"such smart",
+				"such letters",
+				"such spell",
+				"many letters",
+				"how smart",
+				"good",
+				"very typing",
+				"how keyboard",
+				"top doge" };
 
 // Phrases indicating a mistyped letter.
 #define NUM_INCORR_PHRASES 9
 static char *INCORR_PHRASES[] = { "o no",
-			   "wat",
-			   "pls",
-			   "pls no",
-			   "why",
-			   "mabe next time",
-			   "such learning",
-			   "top kek",
-			   "you can do it" };
+				  "wat",
+				  "pls",
+				  "pls no",
+				  "why",
+				  "mabe next time",
+				  "such learning",
+				  "top kek",
+				  "you can do it" };
 
 // Returns a pseudorandom phrase to denote a correctly spelled word.
 char *get_corr_phrase(){
-    int n = rand() % NUM_CORR_PHRASES;
-    return CORR_PHRASES[n];
+    return CORR_PHRASES[rand() % NUM_CORR_PHRASES];
 }
 
 // Returns a pseudorandom phrase to denote a wrong character.
 char *get_incorr_phrase(){
-    int n = rand() % NUM_INCORR_PHRASES;
-    return INCORR_PHRASES[n];
+    return INCORR_PHRASES[rand() % NUM_INCORR_PHRASES];
 }
 
 // Loads the word file and counts the words. mallocs a char** to hold every word
@@ -70,7 +68,7 @@ void start_game(){
     }
     for (wordc = 0;fgets(lb,128,f);wordc++);
     fseek(f,0,SEEK_SET);
-    wordv = (char**) malloc(wordc * sizeof(char*));
+    wordv = malloc(wordc * sizeof(char*));
     for (int n = 0;fgets(lb,128,f);n++){
         wordv[n] = strdup(lb);
     }
@@ -104,8 +102,8 @@ void play_word(){
     mvprintw(mr-1,mc-13,"by Joe Jevnik");
     mvprintw(7,69,"words:  %i",sc);
     mvprintw(8,69,"errors: %i",mis);
-    mvprintw(9,69,"wps:    %f", (double) sc / (t - s));
-    mvprintw(10,69,"time:   %i",t - s);
+    mvprintw(9,69,"wps:    %f", (double) sc / (time_ctr - s));
+    mvprintw(10,69,"time:   %i",time_ctr - s);
     attron(A_BOLD);
     mvprintw(3,69,"%s",word);
     mvprintw(5,67,"> ");
@@ -124,7 +122,7 @@ void play_word(){
 	      free(wordv[n]);
 	  }
 	  free(wordv);
-	  pthread_cancel(*get_time_thread());
+	  pthread_cancel(time_thread);
 	  endwin();
 	  exit(0);
 	  break;
@@ -207,17 +205,17 @@ void play_word(){
     }
 }
 
-time_t *get_time_counter(){
-    return &t;
-}
-
 // Hides the time if needed.
 void show_time(){
     if (not_playing){
 	attron(A_INVIS);
     }
-    mvprintw(9,69,"wps:    %f", (double) sc / (t - s));
-    mvprintw(10,69,"time:   %i",t - s);
+    move(9,69);
+    clrtoeol();
+    move(10,69);
+    clrtoeol();
+    mvprintw(9,69,"wps:    %f", (double) sc / (time_ctr - s));
+    mvprintw(10,69,"time:   %i",time_ctr - s);
     if (not_playing){
 	attroff(A_INVIS);
     }

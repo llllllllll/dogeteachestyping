@@ -10,10 +10,10 @@
 #include "doge.h"
 
 int mr,mc,opt = 0;
+time_t time_ctr;
 
 // ASCII art doge.
-char *doge_img(){
-  return
+char *doge_img =
     "         ***                          ++                     \n"
     "        +=-==+                      +++=-                    \n"
     "       +-:---==+                   *+=----=                  \n"
@@ -44,7 +44,6 @@ char *doge_img(){
     "=----------==========++++++++++=====================++++++++ \n"
     "=====------==============+++++++===================+++==+++++\n"
     "=======------==========================================++++++";
-}
 
 // Sets up the screen, and prepares the game.
 // Sets ip color pairs and prepares the game for using user input.
@@ -177,7 +176,7 @@ void print_time(void *id){
     int r,c; // Row and column when this is called.
     while (1){
 	getyx(stdscr,r,c);
-	time(get_time_counter());
+	time(&time_ctr);
         show_time();
 	move(r,c);
 	refresh();

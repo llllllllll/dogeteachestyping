@@ -8,7 +8,7 @@
 #include <pthread.h>
 
 // Thread access
-pthread_t *get_time_thread();
+extern pthread_t time_thread;
 
 // Screens
 void init_menu();
@@ -19,22 +19,22 @@ void print_time(void*);
 void start_game();
 void play_word();
 void show_time();
-time_t *get_time_counter();
+extern time_t time_ctr;
 
-char *doge_img();
+extern char *doge_img;
 
 // Macros to print doge quicker.
 #define printdoge() \
     do { \
     attron(COLOR_PAIR(1)); \
-    printw("%s",doge_img());\
+    printw("%s",doge_img);\
     attroff(COLOR_PAIR(1)); \
     } while (0);
 #define mvprintdoge(r,c) \
     do {		   \
     attron(COLOR_PAIR(1)); \
-    mvprintw(r,c,"%s",doge_img());\
+    mvprintw(r,c,"%s",doge_img);\
     attroff(COLOR_PAIR(1));\
     } while (0);
 
-#endif
+#endif /* DOGE_H */

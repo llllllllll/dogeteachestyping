@@ -2,7 +2,7 @@
 # 15.10.2013
 
 CC=gcc
-CFLAGS=-c -std=c11 -Wall -O2
+CFLAGS=-c -std=gnu11 -Wall -O2
 LDFLAGS=
 SOURCES=main.c typing.c screen.c
 OBJECTS=$(SOURCES:.c=.o)
@@ -13,7 +13,7 @@ all: $(SOURCES) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ -lncurses -lpthread
 
-.cpp.o:
+.c.o:
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
